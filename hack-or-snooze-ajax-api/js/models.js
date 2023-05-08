@@ -83,7 +83,8 @@ class StoryList {
         token: userToken
       }
     });
-    return story;
+    const newInstance = new Story(story.data.story);
+    return newInstance;
   }
 }
 
@@ -201,5 +202,13 @@ class User {
       console.error("loginViaStoredCredentials failed", err);
       return null;
     }
+  }
+  async addFavorite(storyId){
+    const newFav = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+      token: this.loginToken
+    });
+    // this.favorites.push(newFav);
+    console.log(await newFav.data);
   }
 }

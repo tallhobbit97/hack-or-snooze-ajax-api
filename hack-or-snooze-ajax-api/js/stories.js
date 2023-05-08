@@ -8,7 +8,6 @@ let storyList;
 async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
-
   putStoriesOnPage();
 }
 
@@ -50,3 +49,21 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+async function addNewStory(e){
+  e.preventDefault();
+  let title = $('#new-story-title').val();
+  let author = $('#new-story-author').val();
+  let url = $('#new-story-url').val();
+  const story = {
+    title,
+    author,
+    url
+  }
+  const newStory = await storyList.addStory(currentUser, story);
+  storyList.stories.unshift(newStory);
+  hidePageComponents();
+  putStoriesOnPage();
+}
+
+$submitForm.on('submit', e => addNewStory(e));
