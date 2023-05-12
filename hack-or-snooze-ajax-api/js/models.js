@@ -84,6 +84,7 @@ class StoryList {
       }
     });
     const newInstance = new Story(story.data.story);
+    currentUser.ownStories.push(newInstance);
     return newInstance;
   }
 }
@@ -203,12 +204,40 @@ class User {
       return null;
     }
   }
+  // adds story to user's favorites list.
   async addFavorite(storyId){
     const newFav = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
-      token: this.loginToken
+      method: 'POST',
+      data: {
+        token: this.loginToken
+      }
     });
-    // this.favorites.push(newFav);
-    console.log(await newFav.data);
+    storyList.stories.forEach(story => {
+      if (story.storyId === storyId) {
+        this.favorites.push(story);
+        favStoriesList.stories.push(story);
+      }
+    });
+    return newFav;
+  }
+  //Removes story from user's favorites list
+  async removeFavorite(storyId){
+    const newFav = await axios({
+      url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+      method: 'DELETE',
+      data: {
+        token: this.loginToken
+      }
+    });
+    storyList.stories.forEach((story, idx) => {
+      if (story.storyId === storyId) {
+        this.favorites.splice(idx, 1);
+        favStoriesList.stories.splice(idx, 1);
+      }
+    });
+    console.log(this.favorites);
+    console.log(newFav);
+    return newFav;
   }
 }

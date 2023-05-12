@@ -41,3 +41,17 @@
 #submit-form button {
   width: 6rem;
 }
+
+.not-favorite {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: url('https://api.iconify.design/dashicons/star-empty.svg?color=gray') no-repeat center center / contain;
+}
+
+.favorite {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: url('https://api.iconify.design/dashicons/star-filled.svg?color=gray') no-repeat center center / contain;
+}
