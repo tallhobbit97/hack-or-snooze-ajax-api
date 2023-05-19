@@ -44,14 +44,28 @@
 
 .not-favorite {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   background: url('https://api.iconify.design/dashicons/star-empty.svg?color=gray') no-repeat center center / contain;
 }
 
 .favorite {
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 15px;
   background: url('https://api.iconify.design/dashicons/star-filled.svg?color=gray') no-repeat center center / contain;
+}
+
+.remove {
+  display: inline-block;
+  width: 15px;
+  height: 17px;
+  background: url('https://api.iconify.design/dashicons/trash.svg?color=gray') no-repeat center center / contain;
+}
+
+.remove:hover {
+  display: inline-block;
+  width: 15px;
+  height: 17px;
+  background: url('https://api.iconify.design/dashicons/trash.svg?color=red') no-repeat center center / contain;
 }

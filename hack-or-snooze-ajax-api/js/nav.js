@@ -42,6 +42,14 @@ function navFavoritesClick(evt) {
 
 $navFavs.on("click", navFavoritesClick);
 
+function navUserStoriesClick(evt){
+  hidePageComponents();
+  createUserStories();
+  $userStoriesList.show();
+}
+
+$navOwnStories.on("click", navUserStoriesClick);
+
 /** When a user first logs in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {
@@ -51,5 +59,6 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navSubmit.show();
   $navFavs.show();
+  $navOwnStories.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }

@@ -114,6 +114,6 @@ function updateUIOnUserLogin() {
   if (currentUser.favorites.length > 0){
     createFavStories();
   }
-  $allStoriesList.show();
+  putStoriesOnPage();
   updateNavOnLogin();
 }

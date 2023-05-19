@@ -84,8 +84,28 @@ class StoryList {
       }
     });
     const newInstance = new Story(story.data.story);
-    currentUser.ownStories.push(newInstance);
+    currentUser.ownStories.unshift(newInstance);
     return newInstance;
+  }
+  async removeStory(storyId){
+    let userToken = currentUser.loginToken;
+    const story = await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: 'DELETE',
+      data: {
+        token: userToken
+      }
+    });
+    this.stories.forEach( (story, idx) => {
+      if (story.storyId === storyId){
+        this.stories.splice(idx, 1);
+      }
+    });
+    currentUser.ownStories.forEach( (story, idx) => {
+      if (story.storyId === storyId){
+        currentUser.ownStories.splice(idx, 1);
+      }
+    });
   }
 }
 

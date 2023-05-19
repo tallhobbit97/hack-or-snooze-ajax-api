@@ -3,6 +3,7 @@
 // This is the global list of the stories, an instance of StoryList
 let storyList;
 let favStoriesList;
+let userStoryList;
 
 /** Get and show stories when site first loads. */
 
@@ -10,6 +11,7 @@ async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   if (currentUser){
     favStoriesList = new StoryList(currentUser.favorites);
+    userStoryList = new StoryList(currentUser.ownStories);
   }
   $storiesLoadingMsg.remove();
   putStoriesOnPage();
@@ -23,7 +25,7 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  console.debug("generateStoryMarkup", story);
+  // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
   return $(`
@@ -72,8 +74,9 @@ async function addNewStory(e){
   }
   const newStory = await storyList.addStory(currentUser, story);
   storyList.stories.unshift(newStory);
+  $submitForm.trigger('reset');
   hidePageComponents();
-  $allStoriesList.show();
+  putStoriesOnPage();
 }
 $submitForm.on('submit', e => addNewStory(e));
 
@@ -114,9 +117,27 @@ async function createFavStories(){
   for (let story of favs) {
     const $story = generateStoryMarkup(story);
     $favStoriesList.append($story);
-    $(`#fav-stories-list #${story.storyId}`).prepend('<div class="fav-btn-container favorite"></div>')
+    $(`#fav-stories-list #${story.storyId}`).prepend('<div class="fav-btn-container favorite"></div>');
   }
   $('#fav-stories-list .fav-btn-container').on('click', event => {
-    favBtnHandler(event)
+    favBtnHandler(event);
   });
+}
+
+async function createUserStories(){
+  $userStoriesList.empty();
+  let userStories = await userStoryList.stories;
+  for (let story of userStories){
+    const $story = generateStoryMarkup(story);
+    $userStoriesList.append($story);
+    $(`#user-stories-list #${story.storyId}`).prepend('<div class="remove-btn-container remove"></div>');
+  }
+  $('.remove-btn-container').on('click', evt => removeUserStory(evt));
+}
+
+async function removeUserStory(event){
+  const target = $(event.target);
+  let storyId = target.parent().attr('id');
+  storyList.removeStory(storyId);
+  target.parent().hide();
 }
