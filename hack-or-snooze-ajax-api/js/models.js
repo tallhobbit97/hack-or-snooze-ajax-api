@@ -216,7 +216,6 @@ class User {
     storyList.stories.forEach(story => {
       if (story.storyId === storyId) {
         this.favorites.push(story);
-        favStoriesList.stories.push(story);
       }
     });
     return newFav;
@@ -230,14 +229,11 @@ class User {
         token: this.loginToken
       }
     });
-    storyList.stories.forEach((story, idx) => {
+    favStoriesList.stories.forEach((story, idx) => {
       if (story.storyId === storyId) {
-        this.favorites.splice(idx, 1);
-        favStoriesList.stories.splice(idx, 1);
+        currentUser.favorites.splice(idx, 1);
       }
     });
-    console.log(this.favorites);
-    console.log(newFav);
     return newFav;
   }
 }

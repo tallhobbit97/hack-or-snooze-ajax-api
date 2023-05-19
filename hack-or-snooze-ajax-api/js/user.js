@@ -110,10 +110,10 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   hidePageComponents();
+  favStoriesList = new StoryList(currentUser.favorites);
   if (currentUser.favorites.length > 0){
     createFavStories();
   }
-  inidcateFavoritesOnLoad();
   $allStoriesList.show();
   updateNavOnLogin();
 }

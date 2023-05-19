@@ -23,12 +23,11 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  // console.debug("generateStoryMarkup", story);
+  console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-        <div class="fav-btn-container not-favorite"></div>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -51,17 +50,16 @@ function putStoriesOnPage() {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
-  $('.fav-btn-container').on('click', event => {
-    favBtnHandler(event)
-  });
-  // console.log(currentUser);
-  // console.log(currentUser.favorites);
   if (currentUser){
-    inidcateFavoritesOnLoad;
+    inidcateFavoritesOnLoad();
+    $('.fav-btn-container').on('click', event => {
+      favBtnHandler(event)
+    });
   }
   $allStoriesList.show();
 }
 
+//takes user input from submit form, submits story data to API, creates new Story instance and displays new story on the page with other stories.
 async function addNewStory(e){
   e.preventDefault();
   let title = $('#new-story-title').val();
@@ -100,23 +98,25 @@ function inidcateFavoritesOnLoad(){
   let favoriteIds = currentUser.favorites.map(fav => {
     return fav.storyId;
   });
-  storyList.stories.forEach(story => {
+  for (let story of storyList.stories) {
     if (favoriteIds.includes(story.storyId)){
-      $(`#${story.storyId} .fav-btn-container`).removeClass('not-favorite').addClass('favorite');
-    }    
-  });
+      $(`#${story.storyId}`).prepend('<div class="fav-btn-container favorite"></div>')
+    } else {
+      $(`#${story.storyId}`).prepend('<div class="fav-btn-container not-favorite"></div>')
+    }
+  }
 }
 
 //adds content to $favStoriesList so that it can be shown when needed
 async function createFavStories(){
+  $favStoriesList.empty();
   let favs = await favStoriesList.stories;
   for (let story of favs) {
     const $story = generateStoryMarkup(story);
-    console.log($story);
     $favStoriesList.append($story);
+    $(`#fav-stories-list #${story.storyId}`).prepend('<div class="fav-btn-container favorite"></div>')
   }
-  $('.fav-btn-container').on('click', event => {
+  $('#fav-stories-list .fav-btn-container').on('click', event => {
     favBtnHandler(event)
   });
-  $('.fav-btn-container').removeClass('not-favorite').addClass('favorite');
 }
