@@ -32,7 +32,9 @@ function hidePageComponents() {
     $signupForm,
     $submitForm,
     $favStoriesList,
-    $userStoriesList
+    $userStoriesList,
+    $('#no-favs-message'),
+    $('#no-stories-message')
   ];
   components.forEach(c => c.hide());
 }

@@ -16,13 +16,32 @@
   margin: 20px 30px;
 }
 
+#no-favs-message {
+  font-weight: normal;
+  font-size: 100%;
+  margin: 20px 30px;
+}
+
+#no-stories-message {
+  font-weight: normal;
+  font-size: 100%;
+  margin: 20px 30px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  border-bottom: 1px solid lightgray;
+}
 
 /* Individual stories */
 
 .story-link {
   color: black;
   font-size: 0.85rem;
-  font-weight: normal;
+  font-weight: bold;
   margin: 18px 0;
 }
 
@@ -31,11 +50,18 @@
 }
 
 .story-author {
+  display: block;
   margin-left: 2em;
+  margin-top: 0.5em;
+  color: green;
 }
 
 .story-user {
   display: block;
+  margin-left: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.75em;
+  color: orange;
 }
 
 #submit-form button {

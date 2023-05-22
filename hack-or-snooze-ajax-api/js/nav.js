@@ -36,16 +36,25 @@ $navSubmit.on("click", navSubmitClick);
 // show user's favorites list on click on "favorites"
 function navFavoritesClick(evt) {
   hidePageComponents();
-  createFavStories();
-  $favStoriesList.show();
+  if (currentUser.favorites.length === 0){
+    $('#no-favs-message').show();
+  } else {
+    createFavStories();
+    $favStoriesList.show();
+  }
 }
 
 $navFavs.on("click", navFavoritesClick);
 
+// show user's own stories on click "my stories"
 function navUserStoriesClick(evt){
   hidePageComponents();
-  createUserStories();
-  $userStoriesList.show();
+  if (currentUser.ownStories.length === 0){
+    $('#no-stories-message').show();
+  } else {
+    createUserStories();
+    $userStoriesList.show();
+  }
 }
 
 $navOwnStories.on("click", navUserStoriesClick);

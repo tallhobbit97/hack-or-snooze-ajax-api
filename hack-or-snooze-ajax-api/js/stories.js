@@ -124,6 +124,8 @@ async function createFavStories(){
   });
 }
 
+
+//adds content to $userStoriesList so that it shows when needed
 async function createUserStories(){
   $userStoriesList.empty();
   let userStories = await userStoryList.stories;
@@ -135,6 +137,7 @@ async function createUserStories(){
   $('.remove-btn-container').on('click', evt => removeUserStory(evt));
 }
 
+//handles button press for removing stories and handles subsequent API changes
 async function removeUserStory(event){
   const target = $(event.target);
   let storyId = target.parent().attr('id');
